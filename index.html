@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Geo-Playlister</title>
+	<title>Roadtrip Playlister</title>
 
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	
 	<script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
 
@@ -17,15 +18,58 @@
 </head>
 
 <body>
-	
-	<h1>
 
-	<iframe src="https://www.google.com/maps/d/u/0/embed?mid=13UcMgjd0uaBGLa4CaL44Upzl1-s" width="640" height="480"></iframe>
-		
-	<form>
-		<input type="text">
-		<input type="button">
-	<form>
+	<div class="container">
+
+	<br>
+
+		<div style="color:white; background-color:darkblue" class="jumbotron text-center">
+			<h1>Roadtrip Playlist Generator</h1>
+			<p class="lead">Tell us where you're going. We'll provide the music.</p>
+		</div>
+
+		<div class="panel panel-primary">
+			<div class="panel-heading">Your Travel Information</div>
+			<div class="panel-content">
+				<form destination="form">
+					<div class="form-group">
+		                <label for="start-input">Starting Address</label>
+		                <input class="form-control" id="start-input" type="text">
+	              	</div>
+	              	<div class="form-group">
+		                <label for="destination-input">Destination Address</label>
+		                <input class="form-control" id="destination-input" type="text">
+	              	</div>
+					<button class="btn btn-primary" id="add-user" type="submit">Submit</button>
+				</form>
+			</div>
+		</div>
+
+		<br>
+
+		<iframe src="https://www.google.com/maps/d/u/0/embed?mid=13UcMgjd0uaBGLa4CaL44Upzl1-s" width="640" height="480"></iframe>
+
+		<br>
+
+		<div class="panel panel-primary">
+			<div class="panel-heading">Your Playlist</div>
+			<div class="panel-content" id="box1"> </div>
+
+			<style>
+				.box1 {
+					width: 650px;
+					padding: 10px;
+					float: left;
+					background: #ffffff;
+					margin: 20px;
+					position: relative;
+					border: 1px solid #696969;
+				}
+			</style>
+
+		</div>
+
+	</div>
 
 </body>
 </html>
