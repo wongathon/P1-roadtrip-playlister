@@ -1,33 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
+
 <head>
+
+	<meta charset="UTF-8">
 	<title>Roadtrip Playlister</title>
 
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	
 	<script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
-
 	<script
 	  src="https://code.jquery.com/jquery-3.1.1.min.js"
 	  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-	  crossorigin="anonymous">
+	  crossorigin="anonymous" async>
 	</script>
-
-	<script type="text/javascript" src= "assets/javascript/logic.js"></script>
+	<script type="text/javascript" src= "assets/javascript/logic.js" async></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6zZWCKtxiDB2YolrcZUEp7o0ULnnmnOY&callback=initMap&libraries=places"></script>
 </head>
 
 <body>
-
-
-	<iframe src="https://www.google.com/maps/d/u/0/embed?mid=13UcMgjd0uaBGLa4CaL44Upzl1-s" width="640" height="480"></iframe>
-		
-	<form>
-		<input id="place-1" type="text" value="Irvine">
-		<input id="place-2" type="text" value="Portland, OR">
-		<input id="add-place" type="button" value="submit">
-	</form>
-
 	<div class="container">
 
 	<br>
@@ -40,24 +32,36 @@
 		<div class="panel panel-primary">
 			<div class="panel-heading">Your Travel Information</div>
 			<div class="panel-content">
-				<form destination="form">
+			<!-- 	<form destination="form">
 					<div class="form-group">
 		                <label for="start-input">Starting Address</label>
 		                <input class="form-control" id="start-input" type="text">
 	              	</div>
 	              	<div class="form-group">
-		                <label for="destination-input">Destination Address</label>
-		                <input class="form-control" id="destination-input" type="text">
+		                <label for="end-input">Destination Address</label>
+		                <input class="form-control" id="end-input" type="text">
 	              	</div>
-					<button class="btn btn-primary" id="add-user" type="submit">Submit</button>
-				</form>
+					<button class="btn btn-primary" id="submit" type="submit">Submit</button>
+				</form> -->
+
+				<div id="floating-panel">
+			        <b>Start: </b>
+			        <select id="start-input">
+			            <option value="st louis, mo">St Louis</option>
+			            <option value="new york, ny">New York</option>
+			        </select>
+			        <b>End: </b>
+			        <select id="end-input">
+			            <option value="chicago, il">Chicago</option>
+			        </select>
+			    </div>
 			</div>
 		</div>
 
 		<br>
 
-		<iframe src="https://www.google.com/maps/d/u/0/embed?mid=13UcMgjd0uaBGLa4CaL44Upzl1-s" width="640" height="480"></iframe>
-
+		<div id="map"></div>
+		<div id="warnings-panel"></div>
 		<br>
 
 		<div class="panel panel-primary">
@@ -66,6 +70,9 @@
 		</div>
 
 	</div>
+
+<!--Google Maps api with key from Andrew's Google JS API account. May need to update key later?-->
+
 
 </body>
 </html>

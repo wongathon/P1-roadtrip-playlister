@@ -1,4 +1,4 @@
-$(document).ready(function(){
+
 
 var config = {
     apiKey: "AIzaSyDczdZqYLRkIJ4hw_OdX3Quwi6oHfo6ASk",
@@ -11,49 +11,84 @@ var config = {
 firebase.initializeApp(config);
 
 
+//dense google maps stuff
 
-
-
-
-
-
-$("#add-place").on("click", function() {
-
-	var gMapsKey = "AIzaSyDp2NTOwUzxskBbRvDuutXkl1y9xs0O6xA";
-	var gDirectionsKey = "AIzaSyDtKVttNyU9eJxtsNqGTHWCtbqcPxH7MZc";
-	var origin = $("#place-1").val().trim();
-	var dest = $("#place-2").val().trim();
-
-	origin = origin.split(" ");
-	dest = dest.split(" ");
-
-	origin = origin.join('+');
-	dest = dest.join('+');
- 
-	var mapURL = "https://www.google.com/maps/embed/v1/directions?key="+gMapsKey+"&origin="+origin+"&destination="+dest+"&avoid=tolls|highways"
-	var queryURL = "https://maps.googleapis.com/maps/api/directions/json?origin="+origin+"&destination="+dest+"&key=" + gDirectionsKey;
-
-
-	$("iframe").attr("src", mapURL);
-
-	$.ajax({
-		url: queryURL,
-		type: "GET",
-		dataType: 'jsonp',
-		cache: false,
-	})
-	.done(function(response) {
-		console.log(response);
-
-
-
-		var results = response.data;
-
-		// for (var i = 0; i < results.length; i++) {
-
-		// }
+function initMap(){
+	var markerArray = [];
+	var directionsService = new google.maps.DirectionsService; //instantiate a directions service
+	var directionsDisplay = new google.maps.DirectionsRenderer; //renderer for directions, binds to map
+	var map = new google.maps.Map(document.getElementById('map'), { //
+		zoom: 7,
+		center: {lat: 38.90, lng: -77.03}
 	});
-});
+	directionsDisplay.setMap(map);
 
+	var stepDisplay = new google.maps.InfoWindow;
+
+	calculateAndDisplayRoute(directionsService, directionsDisplay, markerArray, stepDisplay, map);
+
+	var onChangeHandler = function(){
+		calculateAndDisplayRoute(directionsService, directionsDisplay, markerArray, stepDisplay, map);
+	};
+	document.getElementById('start-input').addEventListener('change', onChangeHandler);
+	document.getElementById('end-input').addEventListener('change', onChangeHandler);
+
+}
+
+function calculateAndDisplayRoute(directionsService, directionsDisplay, markerArray, stepDisplay, map) {
+
+	for (var i = 0; i< markerArray.length; i++){
+		markerArray[i].setMap(null);
+	}
+
+	directionsService.route({
+		origin: document.getElementById('start-input').value,
+		destination: document.getElementById('end-input').value,
+		travelMode: 'DRIVING'
+	}, function(response, status){
+		if (status === 'OK') {
+			document.getElementById('warnings-panel').innerHTML = 
+				'<b>' + response.routes[0].warnings + '</b>';
+			directionsDisplay.setDirections(response);
+			showSteps(response, markerArray, stepDisplay, map)
+		} else {
+			window.alert('Directions request failed due to '+ status);
+		}
+	});
+}
+
+function showSteps(directionResult, markerArray, stepDisplay, map){
+	var myRoute = directionResult.routes[0].legs[0];
+	console.log(myRoute);
+
+
+
+	for (var i = 0; i<myRoute.steps.length; i++){
+		var marker = markerArray[i] = markerArray[i] || new google.maps.Marker;
+		marker.setMap(map);
+		marker.setPosition(myRoute.steps[i].start_location);
+		console.log(myRoute.steps[i].duration.value + " seconds");
+		console.log(myRoute.steps[i]);
+		var encody = myRoute.steps[i].encoded_lat_lngs;
+	
+		attachInstructionText(
+			stepDisplay, marker, myRoute.steps[i].instructions, map)
+	}
+}
+
+function attachInstructionText(stepDisplay, marker, text, map) {
+    google.maps.event.addListener(marker, 'click', function() {
+      // Open an info window when the marker is clicked on, containing the text
+      // of the step.
+      stepDisplay.setContent(text);
+      stepDisplay.open(map, marker);
+    });
+}
+
+$(document).ready(function(){
+
+	$("#submit").on("click", function(){
+		event.preventEventDefault();
+	});
 
 });
