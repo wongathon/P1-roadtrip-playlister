@@ -15,20 +15,37 @@ firebase.initializeApp(config);
 
 
 
-console.log("Hello hello");
 
 
-$("button").on("click", function() {
+$("#add-place").on("click", function() {
 
-	console.log("Hi"); 
-	var queryURL = 
-	//comment
+	var gMapsKey = "AIzaSyDp2NTOwUzxskBbRvDuutXkl1y9xs0O6xA";
+	var gDirectionsKey = "AIzaSyDtKVttNyU9eJxtsNqGTHWCtbqcPxH7MZc";
+	var origin = $("#place-1").val().trim();
+	var dest = $("#place-2").val().trim();
+
+	origin = origin.split(" ");
+	dest = dest.split(" ");
+
+	origin = origin.join('+');
+	dest = dest.join('+');
+ 
+	var mapURL = "https://www.google.com/maps/embed/v1/directions?key="+gMapsKey+"&origin="+origin+"&destination="+dest+"&avoid=tolls|highways"
+	var queryURL = "https://maps.googleapis.com/maps/api/directions/json?origin="+origin+"&destination="+dest+"&key=" + gDirectionsKey;
+
+
+	$("iframe").attr("src", mapURL);
+
 	$.ajax({
 		url: queryURL,
-		method: "GET"
+		type: "GET",
+		dataType: 'jsonp',
+		cache: false,
 	})
 	.done(function(response) {
 		console.log(response);
+
+
 
 		var results = response.data;
 
