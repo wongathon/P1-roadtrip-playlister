@@ -11,8 +11,10 @@ var config = {
 firebase.initializeApp(config);
 
 
-//dense google maps stuff
+var timey = [];
+var addy = [];
 
+//dense google maps stuff
 function initMap(){
 	var markerArray = [];
 	var directionsService = new google.maps.DirectionsService; //instantiate a directions service
@@ -57,23 +59,41 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, markerAr
 	});
 }
 
+
 function showSteps(directionResult, markerArray, stepDisplay, map){
 	var myRoute = directionResult.routes[0].legs[0];
 	console.log(myRoute);
-
-
 
 	for (var i = 0; i<myRoute.steps.length; i++){
 		var marker = markerArray[i] = markerArray[i] || new google.maps.Marker;
 		marker.setMap(map);
 		marker.setPosition(myRoute.steps[i].start_location);
+		
 		console.log(myRoute.steps[i].duration.value + " seconds");
-		console.log(myRoute.steps[i]);
-		var encody = myRoute.steps[i].encoded_lat_lngs;
+		timey.push(myRoute.steps[i].duration.value);
+
+		var laty = myRoute.steps[i].end_point.lat();
+		var lngy = myRoute.steps[i].end_point.lng();
+
+		var queryURL = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+laty+","+lngy+"&sensor=true";
+		
+
+		$.ajax({
+			url:queryURL,
+			method: "GET"
+		}).done(function(response){
+			var q = response.results[0].formatted_address
+			var r = q.split(",");
+			addy.push(r[1]);
+
+		});
 	
 		attachInstructionText(
 			stepDisplay, marker, myRoute.steps[i].instructions, map)
 	}
+
+	console.log(timey);
+	console.log(addy);
 }
 
 function attachInstructionText(stepDisplay, marker, text, map) {
@@ -84,6 +104,19 @@ function attachInstructionText(stepDisplay, marker, text, map) {
       stepDisplay.open(map, marker);
     });
 }
+
+for (var i = 0; i<timey.length; i++){
+	var h;
+	if (timey[i]<60){
+		h += timey[i];
+		timey[i+1] += h;
+	}
+
+};
+
+var gSearchKey = "AIzaSyC4Rigzlgi0DjMhQS6BsawCkql3yixJdws";
+
+
 
 $(document).ready(function(){
 
