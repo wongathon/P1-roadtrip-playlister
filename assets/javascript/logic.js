@@ -27,14 +27,10 @@ function initMap(){
 
 	var stepDisplay = new google.maps.InfoWindow;
 
-	calculateAndDisplayRoute(directionsService, directionsDisplay, markerArray, stepDisplay, map);
-
-	var onChangeHandler = function(){
+	document.getElementById('submit').addEventListener('click', function(e){
+		e.preventDefault();
 		calculateAndDisplayRoute(directionsService, directionsDisplay, markerArray, stepDisplay, map);
-	};
-	document.getElementById('start-input').addEventListener('change', onChangeHandler);
-	document.getElementById('end-input').addEventListener('change', onChangeHandler);
-
+	});
 }
 
 function calculateAndDisplayRoute(directionsService, directionsDisplay, markerArray, stepDisplay, map) {
@@ -105,23 +101,8 @@ function attachInstructionText(stepDisplay, marker, text, map) {
     });
 }
 
-for (var i = 0; i<timey.length; i++){
-	var h;
-	if (timey[i]<60){
-		h += timey[i];
-		timey[i+1] += h;
-	}
-
-};
-
 var gSearchKey = "AIzaSyC4Rigzlgi0DjMhQS6BsawCkql3yixJdws";
 
 
+createList();
 
-$(document).ready(function(){
-
-	$("#submit").on("click", function(){
-		event.preventEventDefault();
-	});
-
-});
