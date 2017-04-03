@@ -15,8 +15,13 @@
 	  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
 	  crossorigin="anonymous" async>
 	</script>
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<script type="text/javascript" src= "assets/javascript/logic.js" async></script>
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6zZWCKtxiDB2YolrcZUEp7o0ULnnmnOY&callback=initMap&libraries=places"></script>
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 </head>
 
 <body>
@@ -24,49 +29,58 @@
 
 	<br>
 
-		<div style="color:white; background-color:darkblue" class="jumbotron text-center">
+		<div class="jumbotron text-center">
 			<h1>Roadtrip Playlist Generator</h1>
 			<p class="lead">Tell us where you're going. We'll provide the music.</p>
 		</div>
 
-		<div class="panel panel-primary">
-			<div class="panel-heading">Your Travel Information</div>
-			<div class="panel-content">
-			<!-- 	<form destination="form">
-					<div class="form-group">
-		                <label for="start-input">Starting Address</label>
-		                <input class="form-control" id="start-input" type="text">
-	              	</div>
-	              	<div class="form-group">
-		                <label for="end-input">Destination Address</label>
-		                <input class="form-control" id="end-input" type="text">
-	              	</div>
-					<button class="btn btn-primary" id="submit" type="submit">Submit</button>
-				</form> -->
+		<div class="row"> 
+			<div class="col-lg-8">
+				<div class="panel panel-primary">
+					<div class="panel-heading">Your Travel Information</div>
+					<div class="panel-body">
+						<form destination="form">
+							<div class="form-group">
+				                <label for="start-input">Starting Address</label>
+				                <input class="form-control" id="start-input" type="text">
+			              	</div>
+			              	<div class="form-group">
+				                <label for="end-input">Destination Address</label>
+				                <input class="form-control" id="end-input" type="text">
+			              	</div>
+							<button class="btn btn-primary" id="submit" type="submit">Submit</button>
+						</form>
 
-				<div id="floating-panel">
-			        <b>Start: </b>
-			        <select id="start-input">
-			            <option value="st louis, mo">St Louis</option>
-			            <option value="new york, ny">New York</option>
-			        </select>
-			        <b>End: </b>
-			        <select id="end-input">
-			            <option value="chicago, il">Chicago</option>
-			        </select>
-			    </div>
+						<div id="floating-panel">
+					        <b>Start: </b>
+					        <select id="start-input">
+					            <option value="st louis, mo">St Louis</option>
+					            <option value="new york, ny">New York</option>
+					        </select>
+					        <b>End: </b>
+					        <select id="end-input">
+					            <option value="chicago, il">Chicago</option>
+					        </select>
+					    </div>
+					</div>
+				</div>
+
+				<br>
+
+				<div id="map"></div>
+				<div id="warnings-panel"></div>
+				<br>
+
 			</div>
-		</div>
 
-		<br>
+			<div class="col-lg-4">
+				<div class="panel panel-primary">
+					<div class="panel-heading">Your Playlist</div>
+					<div class="panel-content" id="box1"> </div>
+				</div>
 
-		<div id="map"></div>
-		<div id="warnings-panel"></div>
-		<br>
+			</div>
 
-		<div class="panel panel-primary">
-			<div class="panel-heading">Your Playlist</div>
-			<div class="panel-content" id="box1"> </div>
 		</div>
 
 	</div>

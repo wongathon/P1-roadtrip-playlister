@@ -10,6 +10,8 @@ var config = {
 
 firebase.initializeApp(config);
 
+//Get the starting and destination addresses and push them to the database
+
 
 //dense google maps stuff
 
@@ -30,8 +32,8 @@ function initMap(){
 	var onChangeHandler = function(){
 		calculateAndDisplayRoute(directionsService, directionsDisplay, markerArray, stepDisplay, map);
 	};
-	document.getElementById('start-input').addEventListener('change', onChangeHandler);
-	document.getElementById('end-input').addEventListener('change', onChangeHandler);
+	document.getElementById('start-input').addEventListener('onchange', onChangeHandler);
+	document.getElementById('end-input').addEventListener('onchange', onChangeHandler);
 
 }
 

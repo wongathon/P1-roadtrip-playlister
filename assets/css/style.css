@@ -1,3 +1,17 @@
+
+body {
+
+	background: linear-gradient(to bottom, white, white, white, yellow, white);
+	background-repeat: no-repeat;
+	background-size: 100%;
+	
+}
+.jumbotron {
+	color: white;
+	background-image: url(https://media.giphy.com/media/26CYAE1nLf19gYXq8/giphy.gif);
+	text-align: center
+}
+
 #map {
 	height: 400px;
 	width: 100%
@@ -14,3 +28,7 @@ html, body {
       height: 500px;
       margin: 0;
     }
+
+ #box1 {
+ 	height: 300px;
+ }
