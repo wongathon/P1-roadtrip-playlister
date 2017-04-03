@@ -116,6 +116,7 @@ function doSearch(city, seconds){
   	songsNum = 1;
   };
 
+  $("#songs-list").empty();
   var myUrl = 'https://api.spotify.com/v1/search?type=track&q=' + encodeURIComponent(city) + "&type=track&offset=0&limit=" + songsNum;
 
   $.ajax({
