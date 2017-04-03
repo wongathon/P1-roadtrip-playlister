@@ -65,7 +65,7 @@ function showSteps(directionResult, markerArray, stepDisplay, map){
 		marker.setMap(map);
 		marker.setPosition(myRoute.steps[i].start_location);
 		
-		console.log(myRoute.steps[i].duration.value + " seconds");
+		//console.log(myRoute.steps[i].duration.value + " seconds");
 		timey.push(myRoute.steps[i].duration.value);
 
 		var laty = myRoute.steps[i].end_point.lat();
@@ -80,7 +80,7 @@ function showSteps(directionResult, markerArray, stepDisplay, map){
 		}).done(function(response){
 			var q = response.results[0].formatted_address
 			var r = q.split(",");
-			addy.push(r[1]);
+			addy.push(r[1]); //change back 
 
 		});
 	
@@ -90,6 +90,13 @@ function showSteps(directionResult, markerArray, stepDisplay, map){
 
 	console.log(timey);
 	console.log(addy);
+
+	setTimeout(function() {
+
+		var convert = consolidateCities(addy, timey);
+		displaySongs(convert[0], convert[1]);
+	}, 250);
+	//displaySongs(addy, timey);
 }
 
 function attachInstructionText(stepDisplay, marker, text, map) {
@@ -101,8 +108,72 @@ function attachInstructionText(stepDisplay, marker, text, map) {
     });
 }
 
-var gSearchKey = "AIzaSyC4Rigzlgi0DjMhQS6BsawCkql3yixJdws";
+//query for song, times, add <divs> to table values. 
+function doSearch(city, seconds){
+ 	
+  var songsNum = Math.round(seconds/210); //seconds of travel divided by avg. song length
+  if (songsNum < 1){
+  	songsNum = 1;
+  };
+
+  var myUrl = 'https://api.spotify.com/v1/search?type=track&q=' + encodeURIComponent(city) + "&type=track&offset=0&limit=" + songsNum;
+
+  $.ajax({
+    url: myUrl,
+    method: "GET"
+  }).done(function(r){
+
+    for (var i=0; i<r.tracks.items.length; i++){
+    	var di = $("<tr>");
+        var s = r.tracks.items[i].name;
+        var z;
+       	di.append("<td>"+s+"</td>");
+      for (var j=0; j<r.tracks.items[i].artists.length; j++){
+        var a = r.tracks.items[i].artists[j].name;
+        z = $("<td>");
+        z.append(a);
+      }
+      di.append(z);
+      $("#songs-list").append(di);
+    }
+  });
+
+}
+
+function displaySongs(arr1, arr2){
+	for (var i=0; i<arr1.length; i++){
+		doSearch(arr1[i], arr2[i]);
+	};
+}
+
+//need to consolidate lists to add times - else first song from query will be called multiple times. 
+function consolidateCities(arr1, arr2){
+
+  cityCatch = [];
+  timeCatch = [];
+
+  for (var i=0; i<arr1.length; i++){
+    if (arr1[i] == arr1[i+1]){
+      arr1.shift();
+      arr2[i+1] += arr2[i];
+      arr2.shift();
+      i--;      
+    } else {
+      cityCatch[i] = arr1[i];
+      timeCatch[i] = arr2[i];
+    }
+  };
+
+  return [arr1, arr2];
+
+}
 
 
-createList();
+
+
+//}); //doc on ready END
+
+
+
+
 
