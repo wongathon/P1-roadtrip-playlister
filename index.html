@@ -50,18 +50,6 @@
 			              	</div>
 							<button class="btn btn-primary" id="submit" type="submit">Submit</button>
 						</form>
-
-						<div id="floating-panel">
-					        <b>Start: </b>
-					        <select id="start-input">
-					            <option value="st louis, mo">St Louis</option>
-					            <option value="new york, ny">New York</option>
-					        </select>
-					        <b>End: </b>
-					        <select id="end-input">
-					            <option value="chicago, il">Chicago</option>
-					        </select>
-					    </div>
 					</div>
 				</div>
 
@@ -76,11 +64,17 @@
 			<div class="col-lg-4">
 				<div class="panel panel-primary">
 					<div class="panel-heading">Your Playlist</div>
-					<div class="panel-content" id="box1"> </div>
+					<div class="panel-content" id="box1"> 
+            <table class="table" id="songs-list">
+              <tr>
+                <th>Song Name</th>
+                <th>Song Artists</th>
+              </tr>
+				    </table>
+          </div>
 				</div>
 
 			</div>
-
 		</div>
 
 	</div>
