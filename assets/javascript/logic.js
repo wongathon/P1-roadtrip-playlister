@@ -10,6 +10,8 @@ var config = {
 
 firebase.initializeApp(config);
 
+//Get the starting and destination addresses and push them to the database
+
 
 var timey = [];
 var addy = [];
@@ -30,7 +32,9 @@ function initMap(){
 	document.getElementById('submit').addEventListener('click', function(e){
 		e.preventDefault();
 		calculateAndDisplayRoute(directionsService, directionsDisplay, markerArray, stepDisplay, map);
+
 	});
+
 }
 
 function calculateAndDisplayRoute(directionsService, directionsDisplay, markerArray, stepDisplay, map) {
