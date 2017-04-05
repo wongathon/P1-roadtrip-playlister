@@ -15,6 +15,7 @@ firebase.initializeApp(config);
 
 var timey = [];
 var addy = [];
+var songIDsSpotifyMain = [];
 
 //dense google maps stuff
 function initMap(){
@@ -23,7 +24,12 @@ function initMap(){
 	var directionsDisplay = new google.maps.DirectionsRenderer; //renderer for directions, binds to map
 	var map = new google.maps.Map(document.getElementById('map'), { //
 		zoom: 7,
-		center: {lat: 38.90, lng: -77.03}
+		draggable: false,
+		scrollwheel: false,
+		panControl: false,
+		disableDefaultUI: true,
+		center: {lat: 38.90, lng: -77.03},
+		mapTypeId: 'hybrid'
 	});
 	directionsDisplay.setMap(map);
 
@@ -75,14 +81,16 @@ function showSteps(directionResult, markerArray, stepDisplay, map){
 		var laty = myRoute.steps[i].end_point.lat();
 		var lngy = myRoute.steps[i].end_point.lng();
 
-		var queryURL = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+laty+","+lngy+"&sensor=true";
+		var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+laty+","+lngy+"&sensor=true";
 		
 
 		$.ajax({
 			url:queryURL,
 			method: "GET"
 		}).done(function(response){
-			var q = response.results[0].formatted_address
+			var q = response.results[0].formatted_address;
+			//console.log(response.results[0]);
+			//console.log(q);
 			var r = q.split(",");
 			addy.push(r[1]); //change back 
 
@@ -92,12 +100,13 @@ function showSteps(directionResult, markerArray, stepDisplay, map){
 			stepDisplay, marker, myRoute.steps[i].instructions, map)
 	}
 
-	console.log(timey);
-	console.log(addy);
+	//console.log(timey);
+	//console.log(addy);
 
 	setTimeout(function() {
 
 		var convert = consolidateCities(addy, timey);
+		console.log(convert);
 		displaySongs(convert[0], convert[1]);
 	}, 250);
 	//displaySongs(addy, timey);
@@ -120,6 +129,8 @@ function doSearch(city, seconds){
   	songsNum = 1;
   };
 
+  songIDsSpotifyMain = [];
+  var songIDsSpotifyCity = [];
   $("#songs-list").empty();
   var myUrl = 'https://api.spotify.com/v1/search?type=track&q=' + encodeURIComponent(city) + "&type=track&offset=0&limit=" + songsNum;
 
@@ -128,12 +139,19 @@ function doSearch(city, seconds){
     method: "GET"
   }).done(function(r){
 
+  	//console.log(r);
+  	//console.log(r.tracks.items);
     for (var i=0; i<r.tracks.items.length; i++){
     	var di = $("<tr>");
-        var s = r.tracks.items[i].name;
+        var s = r.tracks.items[i].name; //Gets Name of songs
+
+        var id = r.tracks.items[i].id; //Collects ID's to master ID list for Spotify API playlist
+        songIDsSpotifyCity.push(id);
+
         var z;
        	di.append("<td>"+s+"</td>");
-      for (var j=0; j<r.tracks.items[i].artists.length; j++){
+
+      for (var j=0; j<r.tracks.items[i].artists.length; j++){ // Prints Artists
         var a = r.tracks.items[i].artists[j].name;
         z = $("<td>");
         z.append(a);
@@ -141,8 +159,8 @@ function doSearch(city, seconds){
       di.append(z);
       $("#songs-list").append(di);
     }
+    songIDsSpotifyMain.push(songIDsSpotifyCity); // Doesn't Work right now
   });
-
 }
 
 function displaySongs(arr1, arr2){

@@ -1,14 +1,17 @@
 
 body {
 
-	background: linear-gradient(to bottom, white, white, white, yellow, white);
-	background-repeat: no-repeat;
+	background: linear-gradient(to right,  #596673,  #396a93,  #4e5965);
+	background-repeat: repeat-y;
 	background-size: 100%;
 	
 }
+
 .jumbotron {
 	color: white;
 	background-image: url(https://media.giphy.com/media/26CYAE1nLf19gYXq8/giphy.gif);
+	background-repeat: no-repeat;
+	background-size: 100%;
 	text-align: center
 }
 

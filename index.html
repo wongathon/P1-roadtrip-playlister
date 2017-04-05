@@ -11,75 +11,81 @@
 	
 	<script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
 	<script
-	  src="https://code.jquery.com/jquery-3.1.1.min.js"
-	  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-	  crossorigin="anonymous" async>
+	src="https://code.jquery.com/jquery-3.1.1.min.js"
+	integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+	crossorigin="anonymous" async>
 	</script>
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<script type="text/javascript" src= "assets/javascript/logic.js" async></script>
+
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6zZWCKtxiDB2YolrcZUEp7o0ULnnmnOY&callback=initMap&libraries=places"></script>
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<!-- 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script> -->
 </head>
 
 <body>
-	<div class="container">
 
-	<br>
-
-		<div class="jumbotron text-center">
+	<div class="jumbotron text-center">
+		<div class="container" style="color:white">
 			<h1>Roadtrip Playlist Generator</h1>
 			<p class="lead">Tell us where you're going. We'll provide the music.</p>
 		</div>
-
-		<div class="row"> 
-			<div class="col-lg-8">
-				<div class="panel panel-primary">
-					<div class="panel-heading">Your Travel Information</div>
-					<div class="panel-body">
-						<form destination="form">
-							<div class="form-group">
-				                <label for="start-input">Starting Address</label>
-				                <input class="form-control" id="start-input" type="text">
-			              	</div>
-			              	<div class="form-group">
-				                <label for="end-input">Destination Address</label>
-				                <input class="form-control" id="end-input" type="text">
-			              	</div>
-							<button class="btn btn-primary" id="submit" type="submit">Submit</button>
-						</form>
-					</div>
-				</div>
-
-				<br>
-
-				<div id="map"></div>
-				<div id="warnings-panel"></div>
-				<br>
-
-			</div>
-
-			<div class="col-lg-4">
-				<div class="panel panel-primary">
-					<div class="panel-heading">Your Playlist</div>
-					<div class="panel-content" id="box1"> 
-            <table class="table" id="songs-list">
-              <tr>
-                <th>Song Name</th>
-                <th>Song Artists</th>
-              </tr>
-				    </table>
-          </div>
-				</div>
-
-			</div>
-		</div>
-
 	</div>
 
-<!--Google Maps api with key from Andrew's Google JS API account. May need to update key later?-->
+	<div class="container"> <!--START CONTAINER -->
+	<div class="row"> 
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-heading lead">Your Travel Information</div>
+				<div class="panel-body">
+					<form destination="form">
+						<div class="form-group">
+							<label for="start-input">Starting Address</label>
+							<input class="form-control" id="start-input" type="text">
+						</div>
+						<div class="form-group">
+							<label for="end-input">Destination Address</label>
+							<input class="form-control" id="end-input" type="text">
+						</div>
+						<button class="btn btn-warning btn-block" id="submit" type="submit">Submit</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-8">
+			<div id="map"></div>
+			<div id="warnings-panel"></div>
+		</div>
+	</div>
+	</div>
+	<br>
+
+	<div class="container">
+	<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading lead">Your Playlist</div>
+			<div class="panel-content" id="box1"> 
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Song Name</th>
+							<th>Song Artists</th>
+						</tr>
+					<thead>
+					<tbody id="songs-list">
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	</div> 
+	</div>
+	<!--END CONTAINER -->
+	
+
+
+	<!--Google Maps api with key from Andrew's Google JS API account. May need to update key later?-->
 
 
 </body>
