@@ -35,6 +35,9 @@ function initMap(){
 
 	var stepDisplay = new google.maps.InfoWindow;
 
+	//remove after testing?
+	calculateAndDisplayRoute(directionsService, directionsDisplay, markerArray, stepDisplay, map);
+
 	document.getElementById('submit').addEventListener('click', function(e){
 		e.preventDefault();
 		calculateAndDisplayRoute(directionsService, directionsDisplay, markerArray, stepDisplay, map);
@@ -44,6 +47,9 @@ function initMap(){
 }
 
 function calculateAndDisplayRoute(directionsService, directionsDisplay, markerArray, stepDisplay, map) {
+
+	addy = [];
+	timey = [];
 
 	for (var i = 0; i< markerArray.length; i++){
 		markerArray[i].setMap(null);
@@ -58,7 +64,13 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, markerAr
 			document.getElementById('warnings-panel').innerHTML = 
 				'<b>' + response.routes[0].warnings + '</b>';
 			directionsDisplay.setDirections(response);
-			showSteps(response, markerArray, stepDisplay, map)
+			showSteps(response, markerArray, stepDisplay, map);
+			setTimeout(function() {
+				console.log(addy, timey);
+				var convert = consolidateCities(addy, timey);
+				console.log(convert);
+				displaySongs(convert[0], convert[1]);
+			}, 1000);
 		} else {
 			window.alert('Directions request failed due to '+ status);
 		}
@@ -68,14 +80,13 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, markerAr
 
 function showSteps(directionResult, markerArray, stepDisplay, map){
 	var myRoute = directionResult.routes[0].legs[0];
-	console.log(myRoute);
+	//console.log(myRoute);
 
 	for (var i = 0; i<myRoute.steps.length; i++){
 		var marker = markerArray[i] = markerArray[i] || new google.maps.Marker;
 		marker.setMap(map);
 		marker.setPosition(myRoute.steps[i].start_location);
 		
-		//console.log(myRoute.steps[i].duration.value + " seconds");
 		timey.push(myRoute.steps[i].duration.value);
 
 		var laty = myRoute.steps[i].end_point.lat();
@@ -83,39 +94,24 @@ function showSteps(directionResult, markerArray, stepDisplay, map){
 
 		var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+laty+","+lngy+"&sensor=true";
 		
-
 		$.ajax({
 			url:queryURL,
 			method: "GET"
 		}).done(function(response){
 			var q = response.results[0].formatted_address;
-			//console.log(response.results[0]);
-			//console.log(q);
-			var r = q.split(",");
-			addy.push(r[1]); //change back 
-
+			var r = q.split(", ");
+			addy.push(r[1]); 
 		});
-	
 		attachInstructionText(
 			stepDisplay, marker, myRoute.steps[i].instructions, map)
-	}
-
-	//console.log(timey);
-	//console.log(addy);
-
-	setTimeout(function() {
-
-		var convert = consolidateCities(addy, timey);
-		console.log(convert);
-		displaySongs(convert[0], convert[1]);
-	}, 250);
-	//displaySongs(addy, timey);
+	} //FOR LOOP COMPLETE
 }
+
+
 
 function attachInstructionText(stepDisplay, marker, text, map) {
     google.maps.event.addListener(marker, 'click', function() {
-      // Open an info window when the marker is clicked on, containing the text
-      // of the step.
+      // Open an info window when the marker is clicked on, containing the text of the step.
       stepDisplay.setContent(text);
       stepDisplay.open(map, marker);
     });
@@ -126,11 +122,14 @@ function doSearch(city, seconds){
  	
   var songsNum = Math.round(seconds/210); //seconds of travel divided by avg. song length
   if (songsNum < 1){
-  	songsNum = 1;
+  	songsNum = 3; //3 songs seems about right for per/city on a road trip. Approximated. 
   };
 
+  //to be used for spotify playlist-maker API
   songIDsSpotifyMain = [];
   var songIDsSpotifyCity = [];
+
+
   $("#songs-list").empty();
   var myUrl = 'https://api.spotify.com/v1/search?type=track&q=' + encodeURIComponent(city) + "&type=track&offset=0&limit=" + songsNum;
 
@@ -187,8 +186,9 @@ function consolidateCities(arr1, arr2){
     }
   };
 
-  return [arr1, arr2];
-
+  console.log(cityCatch);
+  console.log(timeCatch);
+  return [cityCatch, timeCatch];
 }
 
 
