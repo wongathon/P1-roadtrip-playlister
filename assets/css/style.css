@@ -1,7 +1,7 @@
 
 body {
 
-	background: linear-gradient(to right,  #596673,  #396a93,  #4e5965);
+	background: linear-gradient(to right,  #434c56,  #003366);
 	background-repeat: repeat-y;
 	background-size: 100%;
 	
@@ -10,7 +10,7 @@ body {
 .jumbotron {
 	color: white;
 	background-image: url(https://media.giphy.com/media/26CYAE1nLf19gYXq8/giphy.gif);
-	background-repeat: no-repeat;
+	background-repeat: repeat-y;
 	background-size: 100%;
 	text-align: center
 }

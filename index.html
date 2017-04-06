@@ -41,11 +41,11 @@
 					<form destination="form">
 						<div class="form-group">
 							<label for="start-input">Starting Address</label>
-							<input class="form-control" id="start-input" type="text">
+							<input class="form-control" id="start-input" type="text" value="Washington DC">
 						</div>
 						<div class="form-group">
 							<label for="end-input">Destination Address</label>
-							<input class="form-control" id="end-input" type="text">
+							<input class="form-control" id="end-input" type="text" value="New York City">
 						</div>
 						<button class="btn btn-warning btn-block" id="submit" type="submit">Submit</button>
 					</form>
@@ -69,11 +69,14 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th>Song Name</th>
-							<th>Song Artists</th>
+							<th>Song</th>
+							<th>Artist</th>
 						</tr>
 					<thead>
 					<tbody id="songs-list">
+							<tr>
+								<td><strong>Loading...</strong><td>
+							</tr>
 					</tbody>
 				</table>
 			</div>
