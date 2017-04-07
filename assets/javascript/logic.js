@@ -1,14 +1,33 @@
 
 
-var config = {
-    apiKey: "AIzaSyDczdZqYLRkIJ4hw_OdX3Quwi6oHfo6ASk",
-    authDomain: "roadtrip-playlister.firebaseapp.com",
-    databaseURL: "https://roadtrip-playlister.firebaseio.com",
-    storageBucket: "roadtrip-playlister.appspot.com",
-    messagingSenderId: "180325085980"
-};
+ var config = {
+    apiKey: "AIzaSyAMLIh55goWte3ZPcng3zhso1g1iUgrKrc",
+    authDomain: "playlist-builder-66aeb.firebaseapp.com",
+    databaseURL: "https://playlist-builder-66aeb.firebaseio.com",
+    projectId: "playlist-builder-66aeb",
+    storageBucket: "playlist-builder-66aeb.appspot.com",
+    messagingSenderId: "121150969392"
+  };
 
-firebase.initializeApp(config);
+  firebase.initializeApp(config);
+
+  var database = firebase.database();
+  var start, stop;
+
+  $("#submit").on("click", function(){
+  	event.preventDefault();
+
+  	start = $("#start-input").val().trim();
+  	stop = $("#end-input").val().trim();
+
+  	console.log(start, stop);
+
+  	database.ref().push({
+  		start: start,
+  		stop: stop
+  	
+  	});
+  });
 
 //Get the starting and destination addresses and push them to the database
 
