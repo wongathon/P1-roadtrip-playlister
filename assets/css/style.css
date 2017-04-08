@@ -10,9 +10,10 @@ body {
 .jumbotron {
 	color: white;
 	background-image: url(https://media.giphy.com/media/26CYAE1nLf19gYXq8/giphy.gif);
-	background-repeat: repeat-y;
-	background-size: 100%;
-	text-align: center
+	background-repeat: repeat-x;
+	background-size: 50%;
+	min-height: 300px;
+	text-align: center;
 }
 
 #map {
