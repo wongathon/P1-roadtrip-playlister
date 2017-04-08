@@ -27,7 +27,7 @@
 
 	<div class="jumbotron text-center">
 		<div class="container" style="color:white">
-			<h1>Roadtrip Playlist Generator</h1>
+			<h1>Roadtrip Playlister</h1>
 			<p class="lead">Tell us where you're going. We'll provide the music.</p>
 		</div>
 	</div>
@@ -64,10 +64,17 @@
 	<div class="row">
 	<div class="col-md-12">
 		<div class="panel panel-default">
-			<div class="panel-heading lead">Your Playlist</div>
+			<div class="panel-heading" >
+				<div class="panel-title lead pull-left" style="font-size: 24px">Your Playlist</div>
+			 	<div class="panel-title lead pull-right" style="font-size: 24px">
+			 		<div><span id="origin"></span> to <span id="dest"></span></div>
+			 		Trip Time: <span id="trip-time">Loading...</span>
+				</div>
+				<div class="clearfix"></div>
+			</div>
 			<div class="panel-content" id="box1"> 
 				<table class="table table-striped">
-					<thead>
+					<thead style="font-size: 18px">
 						<tr>
 							<th>Song</th>
 							<th>Artist</th>
